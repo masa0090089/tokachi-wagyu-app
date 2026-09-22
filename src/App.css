@@ -1,0 +1,426 @@
+/* ==========================================
+   1. 全体的な基本設定
+   ========================================== */
+body {
+  background-color: #1a1a1a; /* 画面全体の背景色（暗い黒系） */
+  color: #f5f5f5; /* 基本の文字色（白っぽく） */
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  padding: 30px; /* アプリ全体のまわりの余白 */
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   2. レイアウト全体（左右の分割配置）
+   ========================================== */
+.main-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* ==========================================
+   3. 左側のサイドバー（カレンダーなど）
+   ========================================== */
+.sidebar {
+  width: 340px;
+  flex-shrink: 0;
+  background-color: #242424;
+  border: 1px solid #333;
+  border-radius: 14px;
+  padding: 25px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-title {
+  margin: 0 0 12px 0;
+  color: #ff9e42;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #333;
+  padding-bottom: 12px;
+}
+
+.sidebar-desc {
+  margin: 0 0 15px 0;
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+.sidebar-input {
+  width: 100%;
+  padding: 14px;
+  background-color: #1a1a1a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.sidebar-info-box {
+  background-color: #1a1a1a;
+  padding: 18px;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+/* ==========================================
+   4. 右側のメインコンテンツエリア全体
+   ========================================== */
+.content-area {
+  flex: 1;
+  width: 100%;
+}
+
+/* ==========================================
+   5. 画面一番上のヘッダー部分
+   ========================================== */
+.header {
+  background: linear-gradient(
+    135deg,
+    #ff6b6b,
+    #ff9e42
+  ); /* グラデーションの背景 */
+  padding: 30px;
+  border-radius: 14px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.title {
+  margin: 0 0 5px 0;
+  font-size: 2.2rem;
+  cursor: pointer;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.fav-btn {
+  padding: 12px 24px;
+  background-color: #ffffff;
+  color: #ff6b6b;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.fav-btn.active {
+  background-color: #333;
+  color: #fff;
+}
+
+/* ==========================================
+   6. エリアで絞り込むためのボタン群
+   ========================================== */
+.area-filters {
+  margin-bottom: 30px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.area-btn {
+  padding: 12px 24px;
+  border-radius: 25px;
+  border: 1px solid #444;
+  background-color: #2a2a2a;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.05rem;
+  transition: 0.2s;
+}
+
+.area-btn.active {
+  background-color: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* ==========================================
+   7. 一覧画面のカード一覧（グリッド配置）
+   ========================================== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 30px;
+  align-items: stretch;
+}
+
+/* カード1枚1枚のデザイン */
+.card {
+  border: 1px solid #333;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #242424;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* 一覧カードの中にある写真 */
+.card-image {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-title {
+  margin: 0 0 12px 0;
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.heart-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.card-info {
+  margin: 0 0 8px 0;
+  font-size: 1rem;
+  color: #ff9e42;
+}
+
+.card-price {
+  margin: 0 0 12px 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.card-desc {
+  margin: 0 0 20px 0;
+  color: #aaa;
+  font-size: 1rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.card-action-btns {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.to-shop-btn,
+.to-producer-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+}
+
+.to-shop-btn {
+  background-color: #ff6b6b;
+  color: #fff;
+}
+
+.to-producer-btn {
+  background-color: #2e7d32;
+  color: #fff;
+}
+
+/* ==========================================
+   8. 詳細画面（ShopDetail.jsx）全体のボックス
+   ========================================== */
+.detail-box-style {
+  background-color: #242424;
+  border-radius: 16px;
+  padding: 30px;
+  border: 1px solid #333;
+}
+
+.producer-box-style {
+  background-color: #1a2620;
+  border-radius: 16px;
+  padding: 30px;
+  border: 1px solid #2d4a38;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* ==========================================
+   ★ 9. 詳細画面のメイン写真
+   ========================================== */
+.detail-image {
+  width: 100%;
+  max-width: 700px; /*  写真の最大横幅を制限（お好みで 600px〜800px に調整可能） */
+  height: 280px; /*  高さを固定 */
+  object-fit: cover; /*  縦横比を保ってきれいに切り抜く */
+  border-radius: 12px;
+  margin: 0 auto 25px auto; /*  「auto」を使うことで左右の余分なスペースが均等になり、中央に寄る */
+  display: block;
+}
+
+/* ==========================================
+   10. 詳細画面のデータテーブル（メニュー名や価格など）
+   ========================================== */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 25px;
+  background: #1e1e1e;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.info-table th,
+.info-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #333;
+  font-size: 1.05rem;
+  text-align: left;
+}
+
+.info-table th {
+  background: #2a2a2a;
+  color: #ff9e42;
+  width: 30%;
+}
+
+.producer-info-table th {
+  background: #203328;
+  color: #81c784;
+  width: 30%;
+}
+
+/* ==========================================
+   11. マップと「一覧へ戻る」ボタンのスタイル
+   ========================================== */
+.map-container {
+  margin-bottom: 30px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #444;
+}
+
+.back-btn {
+  padding: 12px 24px;
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #555;
+}
+/* ==========================================
+   12. 詳細画面の中身をすべて中央に寄せるための設定
+   ========================================== */
+.detail-content-inner {
+  max-width: 800px; /* 全体の最大幅をきれいに収まるサイズに制限 */
+  margin: 0 auto; /* 左右を auto にすることで完全な中央寄せにする */
+  width: 100%;
+}
+/* ==========================================
+   13. ボタンをひとまわり大きくする調整
+   ========================================== */
+
+/* ① 一覧へ戻るボタン */
+.back-btn {
+  padding: 15px 30px; /* 縦・横の余白を少し大きく */
+  font-size: 1.15rem; /* 文字サイズを大きく */
+  background-color: #444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+/* ② お気に入りボタン（詳細画面の右上） */
+.detail-box-style button[onClick*="toggleFavorite"] {
+  font-size: 1.2rem !important; /* 文字やアイコンを大きく */
+  padding: 8px 16px;
+}
+
+/* ③ ヘッダーの「お問い合わせ」「ログイン」などのボタン */
+/* ヘッダー内にあるリンクやボタン類を大きくします */
+.header button,
+.header a {
+  font-size: 1.15rem !important;
+  padding: 14px 28px !important;
+}
+
+/* ==========================================
+   ログイン・お問い合わせ・新規登録画面の共通ボックス
+   ========================================== */
+.login-box,
+.login-container,
+.contact-box,
+.add-form-box {
+  width: 100%;
+  max-width: 550px; /* ふたまわり大きくするための横幅指定 */
+  margin: 40px auto; /* 画面中央に配置 */
+  padding: 40px; /* 内側の余白を広げてゆったりさせる */
+  background-color: #242424;
+  border: 1px solid #333;
+  border-radius: 16px;
+  box-sizing: border-box;
+}
