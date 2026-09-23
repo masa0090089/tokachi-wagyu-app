@@ -141,6 +141,29 @@ function App() {
       });
   };
 
+  // データを削除する処理
+  const handleDelete = (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm("本当にこのメニューを削除しますか？")) {
+      return;
+    }
+
+    fetch(`http://localhost:8080/shops/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("削除に失敗しました");
+        }
+        setWagyuList(wagyuList.filter((item) => item.id !== id));
+        alert("メニューを削除しました！");
+      })
+      .catch((error) => {
+        console.error("削除エラー:", error);
+        alert("データの削除に失敗しました。");
+      });
+  };
+
   const handleContactSubmit = (e) => {
     e.preventDefault();
     if (!contactName || !contactMessage) {
@@ -189,6 +212,8 @@ function App() {
           handleOpenShopDetail={handleOpenShopDetail}
           handleOpenProducerDetail={handleOpenProducerDetail}
           handleBackToList={handleBackToList}
+          isAdmin={isAdmin}
+          handleDelete={handleDelete}
         />
       )}
 
